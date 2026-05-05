@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
+import { Stage } from "@prisma/client";
 
 export async function POST(
   req: Request,
@@ -19,18 +20,18 @@ export async function POST(
     const { id } = await params;
 
     const formData = await req.formData();
-    const stage = formData.get("stage")?.toString();
+    const stageValue = formData.get("stage")?.toString();
 
-    if (!stage) {
-      return NextResponse.json(
-        { error: "Stage required" },
-        { status: 400 }
-      );
-    }
+    if (!stageValue || !Object.values(Stage).includes(stageValue as Stage)) {
+  return NextResponse.json(
+    { error: "Invalid stage" },
+    { status: 400 }
+  );
+}
 
     await prisma.application.update({
       where: { id },
-      data: { stage },
+      data: { stage: stageValue as Stage },
     });
 
     return NextResponse.redirect(
