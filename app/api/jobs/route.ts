@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
+import { checkLimit } from "@/lib/billing/checkLimit";
 
 export async function POST(req: Request) {
   try {
@@ -21,6 +22,18 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: "Title is required" },
         { status: 400 }
+      );
+    }
+ 
+    const { allowed, used, limit } = await checkLimit(orgId, "jobs");
+
+    if (!allowed) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Job limit reached (${used}/${limit}). Upgrade plan.`,
+        },
+        { status: 403 }
       );
     }
 

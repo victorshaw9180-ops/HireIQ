@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
+import { checkLimit } from "@/lib/billing/checkLimit";
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +19,21 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+ 
+    // LIMIT CHECK
+    const { allowed, used, limit } = await checkLimit(orgId, "candidates");
 
+    if (!allowed) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Candidate limit reached (${used}/${limit}). Upgrade plan.`,
+        },
+        { status: 403 }
+      );
+    }
+
+    //Create candidate
     const candidate = await prisma.candidate.create({
       data: {
         orgId,
