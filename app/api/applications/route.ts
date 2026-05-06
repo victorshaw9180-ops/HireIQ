@@ -1,6 +1,37 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
+import { Stage } from "@prisma/client";
+
+export async function GET() {
+  try {
+    const orgId = await getOrgId();
+
+    if (!orgId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const applications = await prisma.application.findMany({
+      where: { orgId },
+      include: {
+        candidate: true,
+        job: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json(applications);
+  } catch (error) {
+    console.error("APPLICATION GET ERROR:", error);
+
+    return NextResponse.json(
+      { error: "Failed to fetch applications" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(req: Request) {
   try {
@@ -27,7 +58,7 @@ export async function POST(req: Request) {
         orgId,
         candidateId,
         jobId,
-        stage: "NEW",
+        stage: Stage.NEW,
       },
     });
 

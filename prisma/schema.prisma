@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -12,11 +12,16 @@ model Organization {
   id         String      @id @default(cuid())
   name       String
   plan       String      @default("starter")
+  aiCredits  Int         @default(20)
+  
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
+  
   candidates Candidate[]
   jobs       Job[]
   members    OrgMember[]
+ 
+
 }
 
 model OrgMember {
@@ -96,7 +101,6 @@ model Application {
   @@index([jobId])
   @@index([candidateId])
   @@index([orgId])
-  @@unique([candidateId, jobId])
 }
 
 model Activity {

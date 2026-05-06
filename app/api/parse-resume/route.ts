@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import OpenAI from "openai";
 import pdfParse from "pdf-parse/lib/pdf-parse.js";
+import { prisma } from "@/lib/prisma";
+import { getOrgId } from "@/lib/getOrgId";
 
 export const runtime = "nodejs";
 
@@ -89,6 +91,15 @@ ${resumeText.slice(0, 15000)}
 
 export async function POST(req: NextRequest) {
   try {
+    const orgId = await getOrgId();
+
+    if (!orgId) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const formData = await req.formData();
     const file = formData.get("resume");
 
@@ -107,25 +118,62 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-if (AI_CONFIG.demoMode) {
-  const parsed = mockResumeParse(resumeText);
 
-  return NextResponse.json({
-    success: true,
-    demoMode: true,
-    rawTextLength: resumeText.length,
-    parsed,
-  });
-}
+    // ✅ CHECK AI CREDITS BEFORE PARSING
+    const org = await prisma.organization.findUnique({
+      where: { id: orgId },
+    });
 
-const parsed = await parseResumeWithAI(resumeText);
+    if (!org || org.aiCredits <= 0) {
+      return NextResponse.json(
+        { error: "No AI credits left. Please upgrade your plan." },
+        { status: 403 }
+      );
+    }
 
-return NextResponse.json({
-  success: true,
-  demoMode: false,
-  rawTextLength: resumeText.length,
-  parsed,
-});
+    // ✅ DEMO MODE PARSING
+    if (AI_CONFIG.demoMode) {
+      const parsed = mockResumeParse(resumeText);
+
+      // ✅ DEDUCT 1 CREDIT
+      await prisma.organization.update({
+        where: { id: orgId },
+        data: {
+          aiCredits: {
+            decrement: 1,
+          },
+        },
+      });
+
+      return NextResponse.json({
+        success: true,
+        demoMode: true,
+        rawTextLength: resumeText.length,
+        creditsLeft: org.aiCredits - 1,
+        parsed,
+      });
+    }
+
+    // ✅ REAL OPENAI PARSING
+    const parsed = await parseResumeWithAI(resumeText);
+
+    // ✅ DEDUCT 1 CREDIT
+    await prisma.organization.update({
+      where: { id: orgId },
+      data: {
+        aiCredits: {
+          decrement: 1,
+        },
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      demoMode: false,
+      rawTextLength: resumeText.length,
+      creditsLeft: org.aiCredits - 1,
+      parsed,
+    });
   } catch (error: any) {
     console.error("Parse resume error:", error);
 
