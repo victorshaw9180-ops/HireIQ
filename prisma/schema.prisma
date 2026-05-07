@@ -12,16 +12,12 @@ model Organization {
   id         String      @id @default(cuid())
   name       String
   plan       String      @default("starter")
-  aiCredits  Int         @default(20)
-  
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  
+  aiCredits  Int         @default(20)
   candidates Candidate[]
   jobs       Job[]
   members    OrgMember[]
- 
-
 }
 
 model OrgMember {
@@ -63,7 +59,7 @@ model Candidate {
   createdAt    DateTime      @default(now())
   applications Application[]
   org          Organization  @relation(fields: [orgId], references: [id])
-
+  rankingScore Int           @default(0)
   @@index([orgId])
 }
 

@@ -38,6 +38,7 @@ const navItems = [
   { href: '/resume', icon: '⚡', label: 'Upload Resume' },
   { href: '/resume/list', icon: '☰', label: 'Resume List' },
   { href: '/ai', icon: '◎', label: 'AI Analyzer' },
+  { href: '/match', icon: '✦', label: 'AI Match' },
 ]
 
 export default function Sidebar() {
@@ -81,7 +82,7 @@ export default function Sidebar() {
           color: '#E8EAF0',
           letterSpacing: '-0.5px',
         }}>
-          HireIQ
+          TalentHawk
         </span>
         <span style={{
           fontSize: '10px',
@@ -159,7 +160,7 @@ export default function Sidebar() {
           color: '#555D78',
           textAlign: 'center',
         }}>
-          HireIQ v1.0 · AI-Powered ATS
+          TalentHawk v1.0 · AI-Powered ATS
         </div>
       </div>
 

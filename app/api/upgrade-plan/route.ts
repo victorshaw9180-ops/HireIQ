@@ -5,16 +5,20 @@ import { getOrgId } from "@/lib/getOrgId";
 export async function POST(req: Request) {
   try {
     const orgId = await getOrgId();
-    const { plan } = await req.json();
 
     if (!orgId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    let credits = 20;
+    const { plan } = await req.json();
 
-    if (plan === "growth") credits = 200;
-    if (plan === "pro") credits = 1000;
+    const validPlans = ["starter", "growth", "pro"];
+
+    if (!validPlans.includes(plan)) {
+      return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
+    }
+
+    const credits = plan === "starter" ? 20 : plan === "growth" ? 200 : 1000;
 
     await prisma.organization.update({
       where: { id: orgId },
@@ -24,9 +28,13 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json({ success: true });
-
-  } catch (e) {
+    return NextResponse.json({
+      success: true,
+      plan,
+      aiCredits: credits,
+    });
+  } catch (error) {
+    console.error("UPGRADE ERROR:", error);
     return NextResponse.json({ error: "Upgrade failed" }, { status: 500 });
   }
 }
