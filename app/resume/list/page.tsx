@@ -77,9 +77,7 @@ export default async function ResumeListPage() {
                 }}
               >
                 <a
-                  href={resume.fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/resume/view/${resume.id}`}
                   style={{
                     background: "#6c63ff",
                     color: "#ffffff",
