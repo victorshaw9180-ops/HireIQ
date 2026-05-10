@@ -1,7 +1,14 @@
+import link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import AppShell from "@/components/AppShell";
 
+function formatFileSize(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+}
 export default async function ResumeListPage() {
   try {
     const orgId = await getOrgId();
@@ -52,10 +59,59 @@ export default async function ResumeListPage() {
             }}
           >
             <h3>{resume.fileName}</h3>
-            <p>Size: {resume.fileSize} bytes</p>
+            <p>Size: {formatFileSize(resume.fileSize)}</p>
+
+            {resume.fileType && <p>Type: {resume.fileType}</p>}
+
             <p>Uploaded: {resume.createdAt.toLocaleString()}</p>
             <p>AI Score: {resume.aiScore ?? "Not scored"}</p>
             <p>Summary: {resume.summary ?? "No summary yet"}</p>
+
+            {resume.fileUrl ? (
+              <div
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  marginTop: 14,
+                  flexWrap: "wrap",
+                }}
+              >
+                <a
+                  href={resume.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    background: "#6c63ff",
+                    color: "#ffffff",
+                    padding: "9px 14px",
+                    borderRadius: 8,
+                    textDecoration: "none",
+                    fontWeight: 700,
+                  }}
+                >
+                  View Resume
+                </a>
+
+                <a
+                  href={resume.fileUrl}
+                  download
+                  style={{
+                    border: "1px solid #374151",
+                    color: "#ffffff",
+                    padding: "9px 14px",
+                    borderRadius: 8,
+                    textDecoration: "none",
+                    fontWeight: 700,
+                  }}
+                >
+                  Download Resume
+                </a>
+              </div>
+            ) : (
+              <p style={{ color: "#fbbf24", marginTop: 12 }}>
+                File link not available for older upload.
+              </p>
+            )}
           </div>
         ))}
       </AppShell>
