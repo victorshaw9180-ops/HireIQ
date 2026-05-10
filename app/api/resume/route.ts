@@ -45,7 +45,9 @@ export async function POST(req: Request) {
     if (uploadError) {
       console.error("SUPABASE UPLOAD ERROR:", uploadError);
       return NextResponse.json(
-        { error: "Failed to upload resume file" },
+        { error: "Failed to upload resume file",
+          details: uploadError.message,
+         },
         { status: 500 }
       );
     }
