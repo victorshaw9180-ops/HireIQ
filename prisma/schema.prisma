@@ -68,9 +68,11 @@ model Resume {
   orgId     String
   fileName  String
   fileSize  Int
-  createdAt DateTime @default(now())
+  fileUrl   String?
+  fileType  String?
   aiScore   Float?
   summary   String?
+  createdAt DateTime @default(now())
 
   @@index([orgId])
 }
