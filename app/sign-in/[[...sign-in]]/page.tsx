@@ -14,9 +14,9 @@ import { SignIn } from "@clerk/nextjs";
 
 export default function Page() {
   return (
-    <div style={{ minHeight: "100vh", background: "#020617", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div>
-        <h1 style={{ color: "white", fontSize: "32px", textAlign: "center", marginBottom: "20px" }}>
+    <main className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+      <div className="w-full max-w-md">
+        <h1 className="mb-6 text-center text-3xl font-bold text-white">
           TalentHawk Sign In
         </h1>
 
@@ -27,6 +27,6 @@ export default function Page() {
           fallbackRedirectUrl="/dashboard"
         />
       </div>
-    </div>
+    </main>
   );
 }
