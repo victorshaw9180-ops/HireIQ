@@ -12,21 +12,14 @@
 
 import { SignIn } from "@clerk/nextjs";
 
-export default function Page() {
+export default function SignInPage() {
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
-        <h1 className="mb-6 text-center text-3xl font-bold text-white">
-          TalentHawk Sign In
-        </h1>
-
-        <SignIn
-          path="/sign-in"
-          routing="path"
-          signUpUrl="/sign-up"
-          fallbackRedirectUrl="/dashboard"
-        />
-      </div>
-    </main>
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <SignIn
+        routing="path"
+        path="/sign-in"
+        signUpUrl="/sign-up"
+      />
+    </div>
   );
 }
