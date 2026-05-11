@@ -29,6 +29,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { SignOutButton } from "@clerk/nextjs";
+import { LogOut } from "lucide-react";
 
 const navItems = [
   { href: '/dashboard', icon: '◈', label: 'Dashboard' },
@@ -163,6 +165,15 @@ export default function Sidebar() {
           TalentHawk v1.0 · AI-Powered ATS
         </div>
       </div>
+
+        <div className="mt-auto border-t border-slate-800 pt-4">
+        <SignOutButton redirectUrl="/sign-in">
+        <button className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 transition">
+        <LogOut size={18} />
+        Logout
+        </button>
+        </SignOutButton>
+        </div>
 
     </div>
   )
