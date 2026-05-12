@@ -58,27 +58,49 @@ export default function AnalyticsPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 mb-8">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
-          <p className="text-slate-400 text-sm">Monthly Revenue</p>
-          <h2 className="text-3xl font-bold mt-2">$42,000</h2>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
-          <p className="text-slate-400 text-sm">Placements</p>
-          <h2 className="text-3xl font-bold mt-2">48</h2>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
-          <p className="text-slate-400 text-sm">Offers Released</p>
-          <h2 className="text-3xl font-bold mt-2">72</h2>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
-          <p className="text-slate-400 text-sm">Submissions</p>
-          <h2 className="text-3xl font-bold mt-2">321</h2>
-        </div>
+      <div className="mb-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+  {[
+    ["Total Revenue", "$42,000", "+31% this month"],
+    ["Monthly Revenue", "$12,400", "May 2026"],
+    ["Placements", "48", "+18% growth"],
+    ["Offers Released", "72", "38.9% conversion"],
+    ["Submissions", "321", "Active pipeline"],
+    ["Interviews", "120", "From submitted candidates"],
+    ["Active Clients", "14", "Across all teams"],
+    ["AI Credits Used", "1,284", "Resume parsing + matching"],
+  ].map(([title, value, note]) => (
+    <div
+      key={title}
+      className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg"
+    >
+      <p className="text-sm text-slate-400">{title}</p>
+      <h2 className="mt-2 text-3xl font-bold">{value}</h2>
+      <p className="mt-2 text-sm text-purple-400">{note}</p>
+    </div>
+  ))}
+</div>
       </div>
+      
+<section className="mb-8">
+  <h2 className="mb-4 text-2xl font-bold">Revenue Intelligence</h2>
+
+  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    {[
+      ["Quarterly Revenue", "$96,000"],
+      ["Half-Year Revenue", "$184,000"],
+      ["Annual Revenue", "$420,000"],
+      ["Avg Placement Fee", "$8,750"],
+    ].map(([title, value]) => (
+      <div
+        key={title}
+        className="rounded-2xl border border-slate-800 bg-slate-900 p-6"
+      >
+        <p className="text-sm text-slate-400">{title}</p>
+        <h3 className="mt-2 text-2xl font-bold">{value}</h3>
+      </div>
+    ))}
+  </div>
+</section>
 
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
