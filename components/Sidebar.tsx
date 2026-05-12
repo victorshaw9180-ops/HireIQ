@@ -1,47 +1,69 @@
-//export default function Sidebar() {
-//  return (
-//    <div style={{
-//      width: "220px",
-//      height: "100vh",
-//      borderRight: "1px solid #ddd",
-//      padding: "20px",
-//      position: "fixed",
-//      left: 0,
-//      top: 0,
-//      background: "#f9f9f9"
-//    }}>
-//      <h2>HireIQ</h2>
-
-//      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-//        <a href="/dashboard">Dashboard</a>
-//        <a href="/jobs">Jobs</a>
-//        <a href="/candidates">Candidates</a>
-//        <a href="/applications">Applications</a>
-//        <a href="/resume">Upload Resume</a>
-//        <a href="/resume/list">Resume List</a>
-//        <a href="/ai">AI Analyzer</a>
-//      </div>
-//    </div>
-//  );
-//}
 
 'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SignOutButton } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
+import {
+  LogOut,
+  BarChart3,
+  LayoutDashboard,
+  Users,
+  Briefcase,
+  Upload,
+  Brain,
+  GitBranch,
+  FileText,
+  Sparkles,
+} from "lucide-react";
 
 const navItems = [
-  { href: '/dashboard', icon: '◈', label: 'Dashboard' },
-  { href: '/jobs', icon: '◫', label: 'Jobs' },
-  { href: '/candidates', icon: '◉', label: 'Candidates' },
-  { href: '/applications', icon: '⊞', label: 'Pipeline' },
-  { href: '/resume', icon: '⚡', label: 'Upload Resume' },
-  { href: '/resume/list', icon: '☰', label: 'Resume List' },
-  { href: '/ai', icon: '◎', label: 'AI Analyzer' },
-  { href: '/match', icon: '✦', label: 'AI Match' },
-]
+  {
+    href: "/dashboard",
+    icon: <LayoutDashboard size={16} />,
+    label: "Dashboard",
+  },
+  {
+    href: "/jobs",
+    icon: <Briefcase size={16} />,
+    label: "Jobs",
+  },
+  {
+    href: "/candidates",
+    icon: <Users size={16} />,
+    label: "Candidates",
+  },
+  {
+    href: "/applications",
+    icon: <GitBranch size={16} />,
+    label: "Pipeline",
+  },
+  {
+    href: "/resume",
+    icon: <Upload size={16} />,
+    label: "Upload Resume",
+  },
+  {
+    href: "/resume/list",
+    icon: <FileText size={16} />,
+    label: "Resume List",
+  },
+  {
+    href: "/ai",
+    icon: <Brain size={16} />,
+    label: "AI Analyzer",
+  },
+  {
+    href: "/analytics",
+    icon: <BarChart3 size={16} />,
+    label: "Analytics",
+  },
+  {
+    href: "/match",
+    icon: <Sparkles size={16} />,
+    label: "AI Match",
+  },
+];
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -156,7 +178,7 @@ export default function Sidebar() {
       >
       Analytics
       </a>
-      
+
       {/* Bottom section */}
       <div style={{
         marginTop: 'auto',
