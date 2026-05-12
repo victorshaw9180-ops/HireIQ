@@ -58,30 +58,30 @@ export default function AnalyticsPage() {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 mb-8">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
           <p className="text-slate-400 text-sm">Monthly Revenue</p>
           <h2 className="text-3xl font-bold mt-2">$42,000</h2>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
           <p className="text-slate-400 text-sm">Placements</p>
           <h2 className="text-3xl font-bold mt-2">48</h2>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
           <p className="text-slate-400 text-sm">Offers Released</p>
           <h2 className="text-3xl font-bold mt-2">72</h2>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
           <p className="text-slate-400 text-sm">Submissions</p>
           <h2 className="text-3xl font-bold mt-2">321</h2>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
           <h2 className="text-xl font-semibold mb-4">
             Revenue Growth
           </h2>
