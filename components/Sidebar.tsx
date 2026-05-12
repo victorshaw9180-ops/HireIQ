@@ -166,7 +166,21 @@ export default function Sidebar() {
         </div>
       </div>
 
+
         <div className="mt-auto border-t border-slate-800 pt-4">
+            <a
+            href="/settings"
+            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+            >
+            Settings
+            </a>
+
+            <a
+            href="/support"
+            className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+            >
+             Helpdesk
+            </a>
         <SignOutButton redirectUrl="/sign-in">
         <button className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 transition">
         <LogOut size={18} />
