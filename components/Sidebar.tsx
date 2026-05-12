@@ -150,7 +150,13 @@ export default function Sidebar() {
           </Link>
         )
       })}
-
+   <a
+      href="/analytics"
+      className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+      >
+      Analytics
+      </a>
+      
       {/* Bottom section */}
       <div style={{
         marginTop: 'auto',
@@ -165,13 +171,6 @@ export default function Sidebar() {
           TalentHawk v1.0 · AI-Powered ATS
         </div>
       </div>
-
-      <a
-      href="/analytics"
-      className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
-      >
-      Analytics
-      </a>
 
         <div className="mt-auto border-t border-slate-800 pt-4">
             <a
