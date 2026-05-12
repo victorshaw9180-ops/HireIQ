@@ -1,6 +1,7 @@
-  import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import Sidebar from "@/components/Sidebar";
+import BackButton from "@/components/BackButton";
 
 export default async function CandidatesPage() {
   const orgId = await getOrgId();
@@ -26,6 +27,8 @@ export default async function CandidatesPage() {
       <Sidebar />
 
       <main style={{ marginLeft: 240, padding: 32, width: "100%" }}>
+      <BackButton />
+
         <h1>Candidates</h1>
 
         {candidates.length === 0 && <p>No candidates yet.</p>}

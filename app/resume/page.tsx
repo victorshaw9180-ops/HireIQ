@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AppShell from "@/components/AppShell";
+import BackButton from "@/components/BackButton";
 
 type UploadResult = {
   success: boolean;
@@ -65,6 +66,9 @@ export default function ResumePage() {
   return (
     <AppShell>
       <div style={{ padding: 20, maxWidth: 760 }}>
+        
+        <BackButton />
+
         <h1
           style={{
             fontSize: "26px",

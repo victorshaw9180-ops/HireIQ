@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import BackButton from "@/components/BackButton";
 
 const plans = [
   {
@@ -93,6 +94,8 @@ export default function PricingPage() {
         fontFamily: "Arial, sans-serif",
       }}
     >
+      <BackButton />
+      
       {/* Top Navbar */}
       <nav
         style={{

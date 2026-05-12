@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import Sidebar from "@/components/Sidebar";
+import BackButton from "@/components/BackButton";
 
 export default async function JobsPage() {
   const orgId = await getOrgId();
@@ -18,6 +19,8 @@ export default async function JobsPage() {
       <Sidebar />
 
       <main style={{ marginLeft: 240, padding: 32, width: "100%" }}>
+      <BackButton />
+
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h1>Jobs</h1>
 

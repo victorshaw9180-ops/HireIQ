@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import BackButton from "@/components/BackButton";
 
 const stages = ["NEW", "SCREENING", "SHORTLISTED", "INTERVIEW", "OFFER", "HIRED", "REJECTED"];
 
@@ -24,6 +25,9 @@ export default function PipelinePage() {
 
   return (
     <main className="p-6 text-white">
+
+      <BackButton />
+      
       <h1 className="text-2xl font-bold mb-6">Pipeline</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-7 gap-4">

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import AppShell from "@/components/AppShell";
+import BackButton from "@/components/BackButton";
 
 export default async function ApplicationsPage() {
   const orgId = await getOrgId();
@@ -21,6 +22,8 @@ export default async function ApplicationsPage() {
   return (
     <AppShell>
     <div style={{ padding: 20 }}>
+      
+      <BackButton />
     
       <h1>Applications</h1>
 

@@ -1,6 +1,10 @@
+import BackButton from "@/components/BackButton";
+
 export default function TeamSettingsPage() {
   return (
     <main className="p-8 text-white max-w-4xl">
+    <BackButton />
+
       <h1 className="text-3xl font-bold mb-2">Team Settings</h1>
       <p className="text-gray-400 mb-8">Invite recruiters and manage access.</p>
 

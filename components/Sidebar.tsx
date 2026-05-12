@@ -166,7 +166,6 @@ export default function Sidebar() {
         </div>
       </div>
 
-//Adding analytics Button
       <a
       href="/analytics"
       className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"

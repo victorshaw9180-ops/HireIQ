@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/BackButton";
 import {
   BarChart,
   Bar,
@@ -40,6 +41,9 @@ const COLORS = ["#8b5cf6", "#6366f1", "#ec4899"];
 export default function AnalyticsPage() {
   return (
     <main className="p-8 text-white">
+        
+        <BackButton />
+
       <div className="mb-8">
         <p className="text-purple-400 font-semibold">
           TalentHawk Analytics
