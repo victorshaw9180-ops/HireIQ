@@ -79,7 +79,7 @@ export default function AnalyticsPage() {
     </div>
   ))}
 </div>
-      </div>
+      
       
 <section className="mb-8">
   <h2 className="mb-4 text-2xl font-bold">Revenue Intelligence</h2>
@@ -97,6 +97,32 @@ export default function AnalyticsPage() {
       >
         <p className="text-sm text-slate-400">{title}</p>
         <h3 className="mt-2 text-2xl font-bold">{value}</h3>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section className="mb-8">
+  <h2 className="mb-4 text-2xl font-bold">Recruiter Productivity KPIs</h2>
+
+  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    {[
+      ["Avg Time to Fill", "24 days", "Target: under 30 days"],
+      ["Submission → Interview", "37.3%", "Strong screening quality"],
+      ["Interview → Offer", "38.9%", "Healthy conversion"],
+      ["Offer → Join", "81.2%", "Good closure ratio"],
+      ["Revenue / Recruiter", "$14,000", "Monthly average"],
+      ["Client Response Time", "18 hrs", "Avg feedback time"],
+      ["Candidate Drop-off", "11.4%", "Needs monitoring"],
+      ["Open Jobs", "36", "Active requirements"],
+    ].map(([title, value, note]) => (
+      <div
+        key={title}
+        className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg"
+      >
+        <p className="text-sm text-slate-400">{title}</p>
+        <h3 className="mt-2 text-2xl font-bold">{value}</h3>
+        <p className="mt-2 text-sm text-slate-500">{note}</p>
       </div>
     ))}
   </div>
