@@ -15,6 +15,7 @@ import {
   GitBranch,
   FileText,
   Sparkles,
+  MessageSquare
 } from "lucide-react";
 
 const navItems = [
@@ -62,6 +63,18 @@ const navItems = [
     href: "/match",
     icon: <Sparkles size={16} />,
     label: "AI Match",
+  },
+  { 
+    href: "/talent-connect",
+    icon: <MessageSquare size={16} />,
+    label: (
+            <div className="flex flex-col leading-tight">
+            <span>TalentConnect</span>
+            <span className="text-[10px] text-slate-500">
+            Communication Center
+            </span>
+            </div>
+          ),
   },
 ];
 
@@ -187,6 +200,13 @@ export default function Sidebar() {
           TalentHawk v1.0 · AI-Powered ATS
         </div>
       </div>
+
+        <Link
+          href="/billing"
+          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+        >
+          Billing
+        </Link>
 
         <div className="mt-auto border-t border-slate-800 pt-4">
             <a
