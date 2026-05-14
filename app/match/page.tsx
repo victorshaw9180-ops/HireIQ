@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import BackButton from "@/components/BackButton";
 
 export default function MatchPage() {
   const [resumeText, setResumeText] = useState("");
@@ -30,6 +31,9 @@ export default function MatchPage() {
 
   return (
     <main className="p-8 text-white">
+    
+    <BackButton />
+
       <h1 className="text-3xl font-bold mb-2">
         AI Resume Match
       </h1>

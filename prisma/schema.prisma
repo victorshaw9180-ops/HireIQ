@@ -112,6 +112,19 @@ model Activity {
   @@index([applicationId])
 }
 
+model Subscription {
+  id                String   @id @default(cuid())
+  clerkUserId       String
+  plan              String
+  status            String
+  stripeCustomerId  String?
+  stripeSubId       String?
+  currentPeriodEnd  DateTime?
+  aiCredits         Int      @default(100)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
 enum Stage {
   NEW
   SCREENING
