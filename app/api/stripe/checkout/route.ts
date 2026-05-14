@@ -4,14 +4,7 @@ import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-
-if (!stripeSecretKey) {
-  throw new Error("Missing STRIPE_SECRET_KEY environment variable");
-}
-
-const stripe = new Stripe(stripeSecretKey);
 
 const priceMap: Record<string, string | undefined> = {
   starter: process.env.STRIPE_STARTER_PRICE_ID,
@@ -21,6 +14,17 @@ const priceMap: Record<string, string | undefined> = {
 
 export async function POST(req: Request) {
   try {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+
+    if (!stripeSecretKey) {
+      return NextResponse.json(
+        { error: "Missing STRIPE_SECRET_KEY environment variable" },
+        { status: 500 }
+      );
+    }
+
+    const stripe = new Stripe(stripeSecretKey);
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -31,9 +35,7 @@ export async function POST(req: Request) {
     }
 
     const user = await currentUser();
-
     const body = await req.json().catch(() => null);
-
     const plan = body?.plan;
 
     if (!plan || typeof plan !== "string") {
@@ -103,9 +105,7 @@ export async function POST(req: Request) {
     console.error("Stripe checkout error:", error);
 
     return NextResponse.json(
-      {
-        error: "Unable to create Stripe checkout session.",
-      },
+      { error: "Unable to create Stripe checkout session." },
       { status: 500 }
     );
   }
