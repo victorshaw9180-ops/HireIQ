@@ -6,6 +6,7 @@ import OpenAI from "openai";
 import pdfParse from "pdf-parse/lib/pdf-parse.js";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
+import mammoth from "mammoth";
 
 export const runtime = "nodejs";
 
@@ -39,7 +40,16 @@ async function extractTextFromFile(file: File) {
   return data.text;
 }
 
-  throw new Error("Only PDF and TXT files are supported for now.");
+ if (
+    file.type ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    file.name.endsWith(".docx")
+  ) {
+    const result = await mammoth.extractRawText({ buffer });
+    return result.value;
+  }
+
+  throw new Error("Only PDF, DOCX, and TXT files are supported for now.");
 }
 
 async function parseResumeWithAI(resumeText: string) {
