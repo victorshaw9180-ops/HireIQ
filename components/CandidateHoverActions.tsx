@@ -7,7 +7,7 @@ export default function CandidateHoverActions() {
           <FileText size={16} />
         </button>
 
-        <div className="absolute left-0 top-10 z-50 hidden w-80 rounded-2xl border border-slate-700 bg-slate-900/90 p-4 text-sm shadow-2xl backdrop-blur-xl group-hover:block">
+        <div className="absolute left-0 top-12 z-50 hidden w-[360px] rounded-2xl border border-slate-700 bg-slate-900/90 p-4 text-sm shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:block">
           <h3 className="mb-3 font-semibold text-white">Latest Notes</h3>
           <p className="text-slate-300">• Candidate prefers remote roles.</p>
           <p className="mt-2 text-slate-300">• Strong US IT recruitment background.</p>
@@ -20,7 +20,7 @@ export default function CandidateHoverActions() {
           <Plus size={16} />
         </button>
 
-        <div className="absolute left-0 top-10 z-50 hidden w-96 rounded-2xl border border-slate-700 bg-slate-900/90 p-4 text-sm shadow-2xl backdrop-blur-xl group-hover:block">
+        <div className="absolute left-0 top-12 z-50 hidden w-[650px] max-h-[420px] overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900/90 p-4 text-sm shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:block">
           <h3 className="mb-3 font-semibold text-white">Submission Timeline</h3>
 
           <div className="space-y-3">
