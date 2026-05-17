@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import Sidebar from "@/components/Sidebar";
 import BackButton from "@/components/BackButton";
+import Link from "next/link";
 
 export default async function CandidatesPage() {
   const orgId = await getOrgId();
@@ -55,7 +56,12 @@ export default async function CandidatesPage() {
               }}
             >
               <div>
-                <h3>{c.name}</h3>
+                <Link
+                href={`/candidates/${c.id}`}
+                className="text-lg font-semibold text-white hover:text-purple-300 transition"
+                >
+                {c.name}
+                </Link>
                 <p>{c.email}</p>
                 <p
                 style={{
