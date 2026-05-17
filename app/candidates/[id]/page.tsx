@@ -1,5 +1,7 @@
 import BackButton from "@/components/BackButton";
 import CandidateHoverActions from "@/components/CandidateHoverActions";
+import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
 
 const bestFitJobs = [
   {
@@ -49,7 +51,26 @@ const applications = [
   },
 ];
 
-export default function CandidateProfilePage() {
+export default async function CandidateProfilePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const candidate = await prisma.candidate.findUnique({
+    where: { id },
+  });
+
+  if (!candidate) {
+    notFound();
+  }
+
+  const score =
+    candidate.rankingScore && candidate.rankingScore > 0
+      ? candidate.rankingScore
+      : 72;
+
   return (
     <main className="min-h-screen bg-slate-950 p-8 text-white">
       <BackButton />
@@ -58,12 +79,13 @@ export default function CandidateProfilePage() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold">Rahul Sharma</h1>
+              <h1 className="text-3xl font-bold">{candidate.name}</h1>
               <CandidateHoverActions />
             </div>
 
             <p className="mt-2 text-slate-400">
-              Senior Java Developer · 7 Years Experience · Remote Preferred
+              {candidate.email || "No email added"} · Source:{" "}
+              {candidate.source || "Manual Upload"}
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2">
@@ -93,7 +115,7 @@ export default function CandidateProfilePage() {
       <section className="mb-8 grid gap-6 lg:grid-cols-4">
         {[
           ["Current Stage", "Interview"],
-          ["Best Match", "92%"],
+          ["Best Match", `${score}%`],
           ["Applications", "3"],
           ["Last Activity", "Today"],
         ].map(([title, value]) => (
@@ -148,7 +170,9 @@ export default function CandidateProfilePage() {
       </section>
 
       <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6">
-        <h2 className="mb-4 text-xl font-bold">Applications / Pipeline Records</h2>
+        <h2 className="mb-4 text-xl font-bold">
+          Applications / Pipeline Records
+        </h2>
 
         <div className="overflow-hidden rounded-xl border border-slate-800">
           <table className="w-full text-left text-sm">
@@ -164,7 +188,10 @@ export default function CandidateProfilePage() {
 
             <tbody>
               {applications.map((app) => (
-                <tr key={`${app.job}-${app.client}`} className="border-t border-slate-800">
+                <tr
+                  key={`${app.job}-${app.client}`}
+                  className="border-t border-slate-800"
+                >
                   <td className="p-4 font-medium">{app.job}</td>
                   <td className="p-4 text-slate-400">{app.client}</td>
                   <td className="p-4">
@@ -185,7 +212,7 @@ export default function CandidateProfilePage() {
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
           <h2 className="text-xl font-bold">TalentConnect Timeline</h2>
           <div className="mt-4 space-y-4 text-sm text-slate-300">
-            <p>• Email sent: Java Developer opportunity — Today</p>
+            <p>• Email sent: Job opportunity — Today</p>
             <p>• Call logged: Candidate confirmed availability — Yesterday</p>
             <p>• LinkedIn touchpoint added — May 12, 2026</p>
           </div>
@@ -194,9 +221,8 @@ export default function CandidateProfilePage() {
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
           <h2 className="text-xl font-bold">AI Insights</h2>
           <p className="mt-4 text-sm text-slate-300">
-            Candidate is a strong fit for backend Java roles with cloud and
-            microservices requirements. Recommended for client submissions
-            requiring Spring Boot, AWS, and distributed systems experience.
+            Candidate is a strong fit based on parsed profile, source,
+            AI match score, and active pipeline suitability.
           </p>
         </div>
       </section>
