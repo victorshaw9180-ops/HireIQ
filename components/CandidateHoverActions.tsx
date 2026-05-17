@@ -1,5 +1,4 @@
 import { FileText, Plus } from "lucide-react";
-
 export default function CandidateHoverActions() {
   return (
     <div className="flex items-center gap-2">
@@ -35,9 +34,8 @@ export default function CandidateHoverActions() {
   </p>
   <p className="text-purple-300">Submitted · Recruiter: Vishal Shah</p>
   <p className="text-slate-500">Today, 11:20 AM</p>
-</div>
+            </div>
 
-<div>
     <div>
     <p className="font-medium text-white">
     SAP Consultant{" "}
@@ -62,7 +60,7 @@ export default function CandidateHoverActions() {
     <p className="text-slate-500">May 12, 2026</p>
     </div>
 </div>
-        </div>
+    </div>
       </div>
     </div>
   );
