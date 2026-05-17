@@ -53,7 +53,7 @@ export default function CandidateHoverActions() {
     — Deloitte
     </p>
     <div className="mt-2 flex items-center gap-2">
-  <span className="rounded-full bg-blue-600/20 px-2 py-1 text-xs text-blue-300">
+  <span className="rounded-full bg-cyan-600/20 px-2 py-1 text-xs text-cyan-300">
     Interview
   </span>
 
@@ -73,7 +73,7 @@ export default function CandidateHoverActions() {
     — TCS
     </p>
     <div className="mt-2 flex items-center gap-2">
-  <span className="rounded-full bg-green-600/20 px-2 py-1 text-xs text-green-300">
+  <span className="rounded-full bg-blue-600/20 px-2 py-1 text-xs text-blue-300">
     Offer
   </span>
 
@@ -83,6 +83,29 @@ export default function CandidateHoverActions() {
 </div>
     <p className="text-slate-500">May 12, 2026</p>
     </div>
+  
+  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+  <p className="font-medium text-white">
+    DevOps Engineer{" "}
+    <span className="text-slate-400">
+      (Client Req. ID: ACC-DEVOPS-7710 / TalentHawk ID: TH-REQ-1004)
+    </span>{" "}
+    — Accenture
+  </p>
+
+  <div className="mt-2 flex items-center gap-2">
+    <span className="rounded-full bg-green-700/30 px-2 py-1 text-xs text-green-300">
+      Placed
+    </span>
+
+    <span className="text-xs text-slate-400">
+      Recruiter: Vishal Shah
+    </span>
+  </div>
+
+  <p className="mt-1 text-xs text-slate-500">May 10, 2026</p>
+</div>
+
 </div>
     </div>
       </div>

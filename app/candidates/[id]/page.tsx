@@ -71,7 +71,28 @@ export default async function CandidateProfilePage({
       ? candidate.rankingScore
       : 72;
 
-  return (
+  const parsedData = candidate.parsedData as {
+    skills?: string[];
+    summary?: string;
+    title?: string;
+    experience?: string;
+    } | null;
+
+  const skills =
+    parsedData?.skills && parsedData.skills.length > 0
+    ? parsedData.skills
+    : ["Skills Pending", "Resume Parsed", "Profile Review Needed"];
+
+  const candidateTitle =
+  parsedData?.title || "Candidate Profile";
+
+  const candidateSummary =
+  parsedData?.summary ||
+  `${candidate.name} has been sourced from ${
+    candidate.source || "manual upload"
+  } and currently has an AI match score of ${score}%. TalentHawk recommends reviewing this candidate against open roles based on parsed resume details, recruiter notes, and pipeline activity.`;
+  
+    return (
     <main className="min-h-screen bg-slate-950 p-8 text-white">
       <BackButton />
 
@@ -84,13 +105,12 @@ export default async function CandidateProfilePage({
             </div>
 
             <p className="mt-2 text-slate-400">
-              {candidate.email || "No email added"} · Source:{" "}
-              {candidate.source || "Manual Upload"}
+            {candidateTitle} · {candidate.email || "No email added"} · Source:{" "}
+            {candidate.source || "Manual Upload"}
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              {["Java", "Spring Boot", "AWS", "Microservices", "SQL"].map(
-                (skill) => (
+              {skills.map((skill: string) => (
                   <span
                     key={skill}
                     className="rounded-full bg-purple-600/20 px-3 py-1 text-xs text-purple-300"
@@ -221,8 +241,7 @@ export default async function CandidateProfilePage({
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
           <h2 className="text-xl font-bold">AI Insights</h2>
           <p className="mt-4 text-sm text-slate-300">
-            Candidate is a strong fit based on parsed profile, source,
-            AI match score, and active pipeline suitability.
+          {candidateSummary}
           </p>
         </div>
       </section>
