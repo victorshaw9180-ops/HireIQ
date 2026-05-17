@@ -31,7 +31,7 @@ export default function ResumePage() {
     const formData = new FormData(form);
 
     try {
-      const res = await fetch("/api/resume", {
+      const res = await fetch("/api/parse-resume", {
         method: "POST",
         body: formData,
       });
