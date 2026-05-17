@@ -135,6 +135,35 @@ export async function POST(req: NextRequest) {
     if (AI_CONFIG.demoMode) {
       const parsed = mockResumeParse(resumeText);
 
+      // ✅ SAVE DEMO CANDIDATE
+await prisma.candidate.create({
+  data: {
+    orgId,
+
+    name: parsed.name || "Demo Candidate",
+
+    email:
+      parsed.email ||
+      `demo-${Date.now()}@talenthawk.ai`,
+
+    phone: parsed.phone || "",
+
+    source: "Demo Resume",
+
+    rankingScore: parsed.score || 72,
+
+    parsedData: {
+      title: parsed.recentRole || "",
+      summary: parsed.summary || "",
+      experience: parsed.experienceYears || "",
+      skills: parsed.skills || [],
+      strengths: parsed.strengths || [],
+      gaps: parsed.gaps || [],
+      location: parsed.location || "",
+    },
+  },
+});
+
       // ✅ DEDUCT 1 CREDIT
       await prisma.organization.update({
         where: { id: orgId },
@@ -156,6 +185,35 @@ export async function POST(req: NextRequest) {
 
     // ✅ REAL OPENAI PARSING
     const parsed = await parseResumeWithAI(resumeText);
+
+    // ✅ SAVE CANDIDATE TO DATABASE
+await prisma.candidate.create({
+  data: {
+    orgId,
+
+    name: parsed.name || "Unknown Candidate",
+
+    email:
+      parsed.email ||
+      `candidate-${Date.now()}@talenthawk.ai`,
+
+    phone: parsed.phone || "",
+
+    source: "Resume Upload",
+
+    rankingScore: parsed.score || 72,
+
+    parsedData: {
+      title: parsed.recentRole || "",
+      summary: parsed.summary || "",
+      experience: parsed.experienceYears || "",
+      skills: parsed.skills || [],
+      strengths: parsed.strengths || [],
+      gaps: parsed.gaps || [],
+      location: parsed.location || "",
+    },
+  },
+});
 
     // ✅ DEDUCT 1 CREDIT
     await prisma.organization.update({

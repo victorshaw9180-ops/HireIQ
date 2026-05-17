@@ -53,7 +53,7 @@ export default function CandidateHoverActions() {
     — Deloitte
     </p>
     <div className="mt-2 flex items-center gap-2">
-  <span className="rounded-full bg-cyan-600/20 px-2 py-1 text-xs text-cyan-300">
+  <span className="rounded-full bg-yellow-600/20 px-2 py-1 text-xs text-yellow-300">
     Interview
   </span>
 
