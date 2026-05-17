@@ -146,22 +146,32 @@ export async function POST(req: NextRequest) {
       const parsed = mockResumeParse(resumeText);
 
       // ✅ SAVE DEMO CANDIDATE
-await prisma.candidate.create({
-  data: {
-    orgId,
-
-    name: parsed.name || "Demo Candidate",
-
-    email:
-      parsed.email ||
-      `demo-${Date.now()}@talenthawk.ai`,
-
+await prisma.candidate.upsert({
+  where: {
+    email: parsed.email || `candidate-${Date.now()}@talenthawk.ai`,
+  },
+  update: {
+    name: parsed.name || "Unknown Candidate",
     phone: parsed.phone || "",
-
-    source: "Demo Resume",
-
+    source: "Resume Upload",
     rankingScore: parsed.score || 72,
-
+    parsedData: {
+      title: parsed.recentRole || "",
+      summary: parsed.summary || "",
+      experience: parsed.experienceYears || "",
+      skills: parsed.skills || [],
+      strengths: parsed.strengths || [],
+      gaps: parsed.gaps || [],
+      location: parsed.location || "",
+    },
+  },
+  create: {
+    orgId,
+    name: parsed.name || "Unknown Candidate",
+    email: parsed.email || `candidate-${Date.now()}@talenthawk.ai`,
+    phone: parsed.phone || "",
+    source: "Resume Upload",
+    rankingScore: parsed.score || 72,
     parsedData: {
       title: parsed.recentRole || "",
       summary: parsed.summary || "",
@@ -197,8 +207,26 @@ await prisma.candidate.create({
     const parsed = await parseResumeWithAI(resumeText);
 
     // ✅ SAVE CANDIDATE TO DATABASE
-await prisma.candidate.create({
-  data: {
+await prisma.candidate.upsert({
+  where: {
+    email: parsed.email || `candidate-${Date.now()}@talenthawk.ai`,
+  },
+  update: {
+    name: parsed.name || "Unknown Candidate",
+    phone: parsed.phone || "",
+    source: "Resume Upload",
+    rankingScore: parsed.score || 72,
+    parsedData: {
+      title: parsed.recentRole || "",
+      summary: parsed.summary || "",
+      experience: parsed.experienceYears || "",
+      skills: parsed.skills || [],
+      strengths: parsed.strengths || [],
+      gaps: parsed.gaps || [],
+      location: parsed.location || "",
+    },
+  },
+  create: {
     orgId,
 
     name: parsed.name || "Unknown Candidate",
