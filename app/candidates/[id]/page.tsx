@@ -2,6 +2,8 @@ import BackButton from "@/components/BackButton";
 import CandidateHoverActions from "@/components/CandidateHoverActions";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import StageBadge from "@/components/StageBadge";
+import AddToPipelineButton from "@/components/AddToPipelineButton";
 
 const bestFitJobs = [
   {
@@ -178,9 +180,14 @@ export default async function CandidateProfilePage({
                     </span>
                   </td>
                   <td className="p-4">
-                    <button className="rounded-lg bg-purple-600 px-3 py-2 text-xs font-semibold hover:bg-purple-500">
-                      Add to Pipeline
-                    </button>
+                    //<button className="rounded-lg bg-purple-600 px-3 py-2 text-xs font-semibold hover:bg-purple-500">
+                    // Add to Pipeline
+                    //</button>// Replace with AddToPipelineButton component
+                   <AddToPipelineButton
+                    candidateId="test-candidate-id"
+                    jobId="test-job-id"
+                    orgId="test-org-id"
+                    /> 
                   </td>
                 </tr>
               ))}
@@ -215,9 +222,7 @@ export default async function CandidateProfilePage({
                   <td className="p-4 font-medium">{app.job}</td>
                   <td className="p-4 text-slate-400">{app.client}</td>
                   <td className="p-4">
-                    <span className="rounded-full bg-blue-600/20 px-3 py-1 text-xs text-blue-300">
-                      {app.stage}
-                    </span>
+                  <StageBadge stage={app.stage} />
                   </td>
                   <td className="p-4 text-slate-400">{app.recruiter}</td>
                   <td className="p-4 text-slate-500">{app.date}</td>
