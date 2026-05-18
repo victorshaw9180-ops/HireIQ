@@ -95,6 +95,9 @@ export default function Sidebar() {
       flexDirection: 'column',
       gap: '4px',
       zIndex: 50,
+      overflowY: 'auto',
+      scrollbarWidth: 'thin',
+      scrollbarColor: '#6D28D9 #12151C',
     }}>
 
       {/* Logo */}
