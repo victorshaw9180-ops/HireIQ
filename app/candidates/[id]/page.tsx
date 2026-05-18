@@ -7,6 +7,7 @@ import AddToPipelineButton from "@/components/AddToPipelineButton";
 
 const bestFitJobs = [
   {
+    jobId: "test-java-job-id",
     title: "Java Developer",
     client: "Infosys",
     match: "92%",
@@ -14,6 +15,7 @@ const bestFitJobs = [
     status: "Open",
   },
   {
+    jobId: "test-sap-job-id",
     title: "SAP Consultant",
     client: "Deloitte",
     match: "86%",
@@ -21,6 +23,7 @@ const bestFitJobs = [
     status: "Interviewing",
   },
   {
+    jobId: "test-data-job-id",
     title: "Data Analyst",
     client: "TCS",
     match: "81%",
@@ -94,6 +97,9 @@ export default async function CandidateProfilePage({
     candidate.source || "manual upload"
   } and currently has an AI match score of ${score}%. TalentHawk recommends reviewing this candidate against open roles based on parsed resume details, recruiter notes, and pipeline activity.`;
   
+  const candidateId = "cmo2m0jr80003xcux6o849zl0";
+  const orgId = "test-org-id";
+
     return (
     <main className="min-h-screen bg-slate-950 p-8 text-white">
       <BackButton />
@@ -180,14 +186,12 @@ export default async function CandidateProfilePage({
                     </span>
                   </td>
                   <td className="p-4">
-                    //<button className="rounded-lg bg-purple-600 px-3 py-2 text-xs font-semibold hover:bg-purple-500">
-                    // Add to Pipeline
-                    //</button>// Replace with AddToPipelineButton component
+                    
                    <AddToPipelineButton
-                    candidateId="test-candidate-id"
-                    jobId="test-job-id"
-                    orgId="test-org-id"
-                    /> 
+                    candidateId={candidateId}
+                    jobId={job.jobId}
+                    orgId={orgId}
+                    />
                   </td>
                 </tr>
               ))}
