@@ -3,7 +3,20 @@
 import { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
 
-const stages = ["NEW", "SCREENING", "SHORTLISTED", "INTERVIEW", "OFFER", "HIRED", "REJECTED"];
+const stages = [
+  "NEW",
+  "SCREENING",
+  "INREVIEW",
+  "SHORTLISTED",
+  "SUBMITTED",
+  "INTERVIEW",
+  "INTERVIEW1",
+  "INTERVIEW2",
+  "OFFER",
+  "HIRED",
+  "REJECTED",
+  "TERMINATED",
+];
 
 export default function PipelinePage() {
   const [applications, setApplications] = useState<any[]>([]);
@@ -24,7 +37,7 @@ export default function PipelinePage() {
   }
 
   return (
-    <main className="p-6 text-white">
+    <main className="min-h-screen bg-slate-950 p-6 text-white">
 
       <BackButton />
       
@@ -37,7 +50,9 @@ export default function PipelinePage() {
           );
 
           return (
-            <div key={stage} className="bg-slate-900 rounded-xl p-3 min-h-[500px]">
+            <div 
+              key={stage} 
+              className="rounded-2xl border border-slate-800 bg-slate-900 p-4 min-h-[500px]">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="font-bold text-sm">{stage}</h2>
                 <span className="text-xs bg-slate-700 px-2 py-1 rounded-full">
@@ -53,7 +68,7 @@ export default function PipelinePage() {
                 {stageApps.map((app) => (
                   <div
                     key={app.id}
-                    className="bg-black border border-slate-700 rounded-lg p-3"
+                    className="rounded-xl border border-slate-800 bg-slate-950 p-3 hover:border-purple-700 transition"
                   >
                     <p className="font-semibold text-sm">
                       {app.candidate?.name || "No Name"}
