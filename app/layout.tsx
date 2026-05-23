@@ -55,8 +55,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'HireIQ',
-  description: 'AI-Powered Recruitment Platform',
+  title: "TalentHawk AI",
+  description: 'Enterprise AI-Powered Recruitment Operating System',
 }
 
 export default function RootLayout({
