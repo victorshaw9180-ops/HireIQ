@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import { Stage } from "@prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
-export async function POST(
+export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -17,27 +18,51 @@ export async function POST(
       );
     }
 
-    const { id } = await params;
+    const { userId } = await auth();
 
-    const formData = await req.formData();
-    const stageValue = formData.get("stage")?.toString();
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const { id } = await params;
+    const body = await req.json();
+    const stageValue = body.stage;
 
     if (!stageValue || !Object.values(Stage).includes(stageValue as Stage)) {
-  return NextResponse.json(
-    { error: "Invalid stage" },
-    { status: 400 }
-  );
-}
+      return NextResponse.json(
+        { error: "Invalid stage" },
+        { status: 400 }
+      );
+    }
 
-    await prisma.application.update({
-      where: { id },
-      data: { stage: stageValue as Stage },
+    const application = await prisma.application.update({
+      where: {
+        id,
+      },
+      data: {
+        stage: stageValue as Stage,
+        notes: {
+          lastStageUpdate: {
+            stage: stageValue,
+            updatedBy: userId,
+            updatedAt: new Date().toISOString(),
+          },
+        },
+      },
+      include: {
+        candidate: true,
+        job: true,
+      },
     });
 
-    return NextResponse.redirect(
-      new URL("/applications", req.url)
-    );
-
+    return NextResponse.json({
+      success: true,
+      message: "Stage updated successfully",
+      application,
+    });
   } catch (error) {
     console.error("UPDATE ERROR:", error);
 
