@@ -95,7 +95,7 @@ export default function Home() {
               fontWeight: 700,
             }}
           >
-            AI-Powered ATS for Modern Recruiters
+            AI-Powered Enterprise Recruitment Operating System
           </div>
 
           <h1

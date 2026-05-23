@@ -29,6 +29,7 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await req.json();
+
     const stageValue = body.stage;
 
     if (!stageValue || !Object.values(Stage).includes(stageValue as Stage)) {
@@ -38,19 +39,10 @@ export async function PATCH(
       );
     }
 
-    const application = await prisma.application.update({
+    const existingApplication = await prisma.application.findFirst({
       where: {
         id,
-      },
-      data: {
-        stage: stageValue as Stage,
-        notes: {
-          lastStageUpdate: {
-            stage: stageValue,
-            updatedBy: userId,
-            updatedAt: new Date().toISOString(),
-          },
-        },
+        orgId,
       },
       include: {
         candidate: true,
@@ -58,10 +50,58 @@ export async function PATCH(
       },
     });
 
+    if (!existingApplication) {
+      return NextResponse.json(
+        { error: "Application not found" },
+        { status: 404 }
+      );
+    }
+
+    const oldStage = existingApplication.stage;
+    const newStage = stageValue as Stage;
+
+    const updatedApplication = await prisma.$transaction(async (tx) => {
+      const application = await tx.application.update({
+        where: {
+          id,
+        },
+        data: {
+          stage: newStage,
+          notes: {
+            lastStageUpdate: {
+              oldStage,
+              newStage,
+              updatedBy: userId,
+              updatedAt: new Date().toISOString(),
+            },
+          },
+        },
+        include: {
+          candidate: true,
+          job: true,
+          activities: {
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+        },
+      });
+
+      await tx.activity.create({
+        data: {
+          applicationId: id,
+          type: "STAGE_CHANGE",
+          content: `Stage changed from ${oldStage} to ${newStage} for ${existingApplication.candidate?.name || "candidate"} on ${existingApplication.job?.title || "job"}. Updated by ${userId}.`,
+        },
+      });
+
+      return application;
+    });
+
     return NextResponse.json({
       success: true,
-      message: "Stage updated successfully",
-      application,
+      message: `Stage updated from ${oldStage} to ${newStage}`,
+      application: updatedApplication,
     });
   } catch (error) {
     console.error("UPDATE ERROR:", error);
