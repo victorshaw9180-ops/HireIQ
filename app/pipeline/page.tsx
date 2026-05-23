@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
+import UpdateStageButton from "@/components/UpdateStageButton";
 
 const stages = [
   "NEW",
@@ -83,6 +84,38 @@ export default function PipelinePage() {
                         AI Score: {app.aiScore}
                       </p>
                     )}
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+    <UpdateStageButton
+    applicationId={app.id}
+    stage="SCREENING"
+    label="Screening"
+    />
+
+    <UpdateStageButton
+    applicationId={app.id}
+    stage="SUBMITTED"
+    label="Submit"
+    />
+
+    <UpdateStageButton
+    applicationId={app.id}
+    stage="INTERVIEW1"
+    label="Interview 1"
+    />
+
+    <UpdateStageButton
+    applicationId={app.id}
+    stage="OFFER"
+    label="Offer"
+    />
+
+    <UpdateStageButton
+    applicationId={app.id}
+    stage="HIRED"
+    label="Hired"
+    />
+    </div>
                   </div>
                 ))}
               </div>
