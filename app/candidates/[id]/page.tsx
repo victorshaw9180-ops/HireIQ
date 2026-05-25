@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import StageBadge from "@/components/StageBadge";
 import AddToPipelineButton from "@/components/AddToPipelineButton";
+import ApplicationActivityTimeline from "@/components/ApplicationActivityTimeline";
 
 const bestFitJobs = [
   {
@@ -254,6 +255,28 @@ export default async function CandidateProfilePage({
           </p>
         </div>
       </section>
+
+      <section className="mt-8">
+        <ApplicationActivityTimeline
+        activities={[
+        {
+        id: "1",
+        type: "STAGE_CHANGE",
+        content:
+          "Candidate moved from SCREENING to SUBMITTED by Vishal Shah.",
+        createdAt: new Date().toISOString(),
+        },
+        {
+        id: "2",
+        type: "INTERVIEW",
+        content:
+          "Interview 1 scheduled with Infosys hiring manager.",
+        createdAt: new Date().toISOString(),
+        },
+      ]}
+      />
+      </section>
+
     </main>
   );
 }

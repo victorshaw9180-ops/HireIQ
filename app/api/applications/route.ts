@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
 import { Stage } from "@prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
@@ -41,10 +42,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const formData = await req.formData();
 
     const candidateId = formData.get("candidateId")?.toString();
     const jobId = formData.get("jobId")?.toString();
+
+    const recruiterName =
+    formData.get("recruiterName")?.toString() || "Unknown Recruiter";
 
     if (!candidateId || !jobId) {
       return NextResponse.json(
@@ -53,16 +66,37 @@ export async function POST(req: Request) {
       );
     }
 
-    await prisma.application.create({
+     const application = await prisma.application.create({
       data: {
         orgId,
         candidateId,
         jobId,
+
+         recruiterName,
+        submittedAt: new Date(),
+      
         stage: Stage.NEW,
+        
+        activities: {
+          create: {
+            type: "APPLICATION_CREATED",
+            content: `${recruiterName} added candidate into pipeline.`,
+          },
+        },
+      },
+ 
+      include: {
+        candidate: true,
+        job: true,
+        activities: true,
       },
     });
 
-    return NextResponse.redirect(new URL("/applications", req.url));
+     return NextResponse.json({
+      success: true,
+      application,
+    });
+
   } catch (error) {
     console.error("APPLICATION CREATE ERROR:", error);
 

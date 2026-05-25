@@ -83,6 +83,8 @@ model Application {
   jobId           String
   orgId           String
   stage           Stage      @default(NEW)
+  recruiterName   String?
+  submittedAt     DateTime?
   aiScore         Float?
   matchScore      Float?
   resumeScore     Float?

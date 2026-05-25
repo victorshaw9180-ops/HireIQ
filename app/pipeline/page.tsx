@@ -5,18 +5,17 @@ import BackButton from "@/components/BackButton";
 import UpdateStageButton from "@/components/UpdateStageButton";
 
 const stages = [
-  "NEW",
-  "SCREENING",
-  "INREVIEW",
-  "SHORTLISTED",
-  "SUBMITTED",
-  "INTERVIEW",
-  "INTERVIEW1",
-  "INTERVIEW2",
-  "OFFER",
-  "HIRED",
-  "REJECTED",
-  "TERMINATED",
+  { key: "NEW", label: "NEW"},
+  { key: "SCREENING", label: "SCREENING"},
+  { key: "INREVIEW", label: "IN-REVIEW"},
+  { key: "SHORTLISTED", label: "SHORTLISTED"},
+  { key: "SUBMITTED", label: "SUBMITTED"},
+  { key: "INTERVIEW1", label: "INTERVIEW 1"},
+  { key: "INTERVIEW2", label: "INTERVIEW 2"},
+  { key: "OFFER", label: "OFFER"},
+  { key: "HIRED", label: "HIRED / PLACED"},
+  { key: "TERMINATED", label: "TERMINATED"},
+  { key: "REJECTED", label: "REJECTED"},
 ];
 
 export default function PipelinePage() {
@@ -47,15 +46,15 @@ export default function PipelinePage() {
       <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-7 gap-4">
         {stages.map((stage) => {
           const stageApps = applications.filter(
-            (app) => String(app.stage).toUpperCase() === stage
+            (app) => String(app.stage).toUpperCase() === stage.key
           );
 
           return (
             <div 
-              key={stage} 
+              key={stage.key}
               className="rounded-2xl border border-slate-800 bg-slate-900 p-4 min-h-[500px]">
               <div className="flex justify-between items-center mb-3">
-                <h2 className="font-bold text-sm">{stage}</h2>
+                <h2 className="font-bold text-sm">{stage.label}</h2>
                 <span className="text-xs bg-slate-700 px-2 py-1 rounded-full">
                   {stageApps.length}
                 </span>
