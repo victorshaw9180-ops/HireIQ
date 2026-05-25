@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import StageBadge from "@/components/StageBadge";
 import AddToPipelineButton from "@/components/AddToPipelineButton";
 import ApplicationActivityTimeline from "@/components/ApplicationActivityTimeline";
+import CandidateNotes from "@/components/CandidateNotes";
+import AICandidateInsights from "@/components/AICandidateInsights";
 
 const bestFitJobs = [
   {
@@ -276,6 +278,18 @@ export default async function CandidateProfilePage({
       ]}
       />
       </section>
+
+    <div className="mt-6">
+    <CandidateNotes applicationId={candidate.id} />
+    </div>
+
+    <div className="mt-6">
+    <AICandidateInsights
+    candidateName={candidate.name}
+    resumeText={JSON.stringify(candidate.parsedData)}
+    jobTitle="Software Engineer"
+    />
+    </div>
 
     </main>
   );

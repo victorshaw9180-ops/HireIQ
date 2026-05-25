@@ -15,6 +15,58 @@ export default async function DashboardPage() {
   const applications = await prisma.application.count({ where: { orgId } });
   const resumes = await prisma.resume.count({ where: { orgId } });
 
+  const activities = await prisma.activity.findMany({
+  where: {
+    application: {
+      orgId,
+    },
+  },
+  orderBy: {
+    createdAt: "desc",
+  },
+  take: 10,
+});
+
+const screeningCount = await prisma.application.count({
+  where: {
+    orgId,
+    stage: "SCREENING",
+  },
+});
+
+const interviewCount = await prisma.application.count({
+  where: {
+    orgId,
+    stage: "INTERVIEW",
+  },
+});
+
+const offerCount = await prisma.application.count({
+  where: {
+    orgId,
+    stage: "OFFER",
+  },
+});
+
+const hiredCount = await prisma.application.count({
+  where: {
+    orgId,
+    stage: "HIRED",
+  },
+});
+
+const recruiterAnalytics = await prisma.application.groupBy({
+  by: ["recruiterName"],
+
+  where: {
+    orgId,
+  },
+
+  _count: {
+    id: true,
+  },
+});
+
   const cardStyle = {
     background: "#0f131a",
     border: "1px solid #2A2F3E",
@@ -43,7 +95,7 @@ export default async function DashboardPage() {
     border: "1px solid #222938",
     fontSize: 14,
   };
-
+  
   return (
     <div
       style={{
@@ -101,10 +153,10 @@ export default async function DashboardPage() {
             <h3 style={{ marginBottom: 14 }}>Hiring Funnel</h3>
             <div style={{ color: "#8B91A8", lineHeight: 2 }}>
               <div>Applied: {applications}</div>
-              <div>Screening: 0</div>
-              <div>Interview: 0</div>
-              <div>Offer: 0</div>
-              <div>Hired: 0</div>
+              <div>Screening: {screeningCount}</div>
+              <div>Interview: {interviewCount}</div>
+              <div>Offer: {offerCount}</div>
+              <div>Hired: {hiredCount}</div>
             </div>
           </div>
 
@@ -129,42 +181,63 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div style={{ ...cardStyle, marginTop: 30 }}>
-          <h3 style={{ marginBottom: 20 }}>Quick Actions</h3>
+            <div style={{ ...cardStyle, marginTop: 30 }}>
+            <h3 style={{ marginBottom: 20 }}>Recruiter Activity</h3>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/jobs/new" style={buttonStyle}>+ Add Job</Link>
-            <Link href="/resume" style={buttonStyle}>Upload Resume</Link>
-            <Link href="/match" style={buttonStyle}>AI Match</Link>
-            <Link href="/settings/team" style={buttonStyle}>Invite Recruiter</Link>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {activities.length === 0 ? (
+            <div style={{ color: "#8B91A8" }}>
+            No recruiter activity yet.
+            </div>
+          ) : (
+            activities.map((activity) => (
+            <div key={activity.id} style={activityItem}>
+            <span>{activity.content}</span>
+
+            <span style={{ color: "#666" }}>
+            {new Date(activity.createdAt).toLocaleString()}
+            </span>
+            </div>
+          ))
+          )}
           </div>
         </div>
-
+        
         <div style={{ ...cardStyle, marginTop: 30 }}>
-          <h3 style={{ marginBottom: 20 }}>Recruiter Activity</h3>
+  <h3 style={{ marginBottom: 20 }}>
+    Recruiter Performance
+  </h3>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={activityItem}>
-              <span>🟢 Candidate moved to Screening</span>
-              <span style={{ color: "#666" }}>2 min ago</span>
-            </div>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: 14,
+    }}
+  >
+    {recruiterAnalytics.length === 0 ? (
+      <div style={{ color: "#8B91A8" }}>
+        No recruiter analytics yet.
+      </div>
+    ) : (
+      recruiterAnalytics.map((recruiter) => (
+        <div
+          key={recruiter.recruiterName}
+          style={activityItem}
+        >
+          <span>
+            {recruiter.recruiterName || "Unknown Recruiter"}
+          </span>
 
-            <div style={activityItem}>
-              <span>📄 Resume parsed successfully</span>
-              <span style={{ color: "#666" }}>12 min ago</span>
-            </div>
-
-            <div style={activityItem}>
-              <span>🤖 AI Match completed for Java Developer role</span>
-              <span style={{ color: "#666" }}>25 min ago</span>
-            </div>
-
-            <div style={activityItem}>
-              <span>👥 Recruiter invited to organization</span>
-              <span style={{ color: "#666" }}>1 hour ago</span>
-            </div>
-          </div>
+          <span>
+            {recruiter._count.id} submissions
+          </span>
         </div>
+      ))
+    )}
+  </div>
+</div>
+
       </main>
     </div>
   );

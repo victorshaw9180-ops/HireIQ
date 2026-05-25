@@ -95,6 +95,7 @@ model Application {
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   activities      Activity[]
+  notesFeed       CandidateNote[]
   candidate       Candidate  @relation(fields: [candidateId], references: [id])
   job             Job        @relation(fields: [jobId], references: [id])
 
@@ -109,6 +110,18 @@ model Activity {
   type          String
   content       String
   createdAt     DateTime    @default(now())
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  @@index([applicationId])
+}
+
+model CandidateNote {
+  id            String      @id @default(cuid())
+  applicationId String
+  recruiterName String
+  content       String
+  createdAt     DateTime    @default(now())
+
   application   Application @relation(fields: [applicationId], references: [id])
 
   @@index([applicationId])
