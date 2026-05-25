@@ -96,6 +96,7 @@ model Application {
   updatedAt       DateTime   @updatedAt
   activities      Activity[]
   notesFeed       CandidateNote[]
+  interviews      Interview[]
   candidate       Candidate  @relation(fields: [candidateId], references: [id])
   job             Job        @relation(fields: [jobId], references: [id])
 
@@ -127,6 +128,21 @@ model CandidateNote {
   @@index([applicationId])
 }
 
+model Interview {
+  id              String            @id @default(cuid())
+  applicationId   String
+  title           String
+  interviewerName String
+  scheduledAt     DateTime
+  status          InterviewStatus   @default(SCHEDULED)
+  feedback        String?
+  createdAt       DateTime          @default(now())
+
+  application     Application       @relation(fields: [applicationId], references: [id])
+
+  @@index([applicationId])
+}
+
 model Subscription {
   id                String   @id @default(cuid())
   clerkUserId       String
@@ -153,4 +169,11 @@ enum Stage {
   OFFER
   HIRED
   TERMINATED 
+}
+
+enum InterviewStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  RESCHEDULED
 }

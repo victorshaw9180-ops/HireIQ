@@ -7,6 +7,7 @@ import AddToPipelineButton from "@/components/AddToPipelineButton";
 import ApplicationActivityTimeline from "@/components/ApplicationActivityTimeline";
 import CandidateNotes from "@/components/CandidateNotes";
 import AICandidateInsights from "@/components/AICandidateInsights";
+import InterviewScheduler from "@/components/InterviewScheduler";
 
 const bestFitJobs = [
   {
@@ -289,6 +290,10 @@ export default async function CandidateProfilePage({
     resumeText={JSON.stringify(candidate.parsedData)}
     jobTitle="Software Engineer"
     />
+    </div>
+
+    <div className="mt-6">
+    <InterviewScheduler applicationId={candidate.id} />
     </div>
 
     </main>
