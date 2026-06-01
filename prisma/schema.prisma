@@ -9,22 +9,40 @@ datasource db {
 }
 
 model Organization {
-  id         String      @id @default(cuid())
-  name       String
-  plan       String      @default("starter")
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  aiCredits  Int         @default(20)
-  candidates Candidate[]
-  jobs       Job[]
-  members    OrgMember[]
+  id                   String      @id @default(cuid())
+  name                 String
+  plan                 String      @default("free")
+  
+  aiCredits            Int         @default(20)
+  paymentProvider      String?
+
+//stripe
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+
+// Razorpay
+  razorpayCustomerId   String?
+  razorpaySubscriptionId String?
+  razorpayOrderId      String?
+
+  subscriptionStatus   String?
+  
+  trialEndsAt          DateTime?
+  isTrialExpired       Boolean     @default(false)
+
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+  
+  candidates           Candidate[]
+  jobs                 Job[]
+  members              OrgMember[]
 }
 
 model OrgMember {
   id     String       @id @default(cuid())
   orgId  String
   userId String
-  role   String       @default("recruiter")
+  role   UserRole     @default(RECRUITER)
   org    Organization @relation(fields: [orgId], references: [id])
 
   @@unique([orgId, userId])
@@ -44,6 +62,22 @@ model Job {
   updatedAt    DateTime      @updatedAt
   applications Application[]
   org          Organization  @relation(fields: [orgId], references: [id])
+
+  @@index([orgId])
+}
+
+model Recruiter {
+  id        String   @id @default(cuid())
+  orgId     String
+  clerkId   String   @unique
+  name      String
+  email     String
+  role      UserRole @default(RECRUITER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  applications Application[]
 
   @@index([orgId])
 }
@@ -78,28 +112,35 @@ model Resume {
 }
 
 model Application {
-  id              String     @id @default(cuid())
-  candidateId     String
-  jobId           String
-  orgId           String
-  stage           Stage      @default(NEW)
-  recruiterName   String?
-  submittedAt     DateTime?
-  aiScore         Float?
-  matchScore      Float?
-  resumeScore     Float?
-  skillsScore     Float?
-  experienceScore Float?
-  scoreReason     String?
-  notes           Json?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  activities      Activity[]
-  notesFeed       CandidateNote[]
-  interviews      Interview[]
-  candidate       Candidate  @relation(fields: [candidateId], references: [id])
-  job             Job        @relation(fields: [jobId], references: [id])
-
+  id                  String     @id @default(cuid())
+  candidateId         String
+  jobId               String
+  orgId               String
+  stage               Stage      @default(NEW)
+  
+  decision     CandidateDecision @default(PENDING)
+  recruiterName       String?
+  
+  assignedRecruiterId String?
+  assignedRecruiter   Recruiter? @relation(fields: [assignedRecruiterId], references: [id])
+  
+  submittedAt         DateTime?
+  
+  aiScore             Float?
+  matchScore          Float?
+  resumeScore         Float?
+  skillsScore         Float?
+  experienceScore     Float?
+  scoreReason         String?
+  notes               Json?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  activities          Activity[]
+  notesFeed           CandidateNote[]
+  interviews          Interview[]
+  candidate           Candidate  @relation(fields: [candidateId], references: [id])
+  job                 Job        @relation(fields: [jobId], references: [id])
+  
   @@index([jobId])
   @@index([candidateId])
   @@index([orgId])
@@ -139,8 +180,21 @@ model Interview {
   createdAt       DateTime          @default(now())
 
   application     Application       @relation(fields: [applicationId], references: [id])
-
+  feedbacks InterviewFeedback[]
   @@index([applicationId])
+}
+
+model InterviewFeedback {
+  id            String    @id @default(cuid())
+  interviewId   String
+  rating        Int
+  feedback      String
+  recommendation String
+  createdAt     DateTime @default(now())
+
+  interview Interview @relation(fields: [interviewId], references: [id])
+
+  @@index([interviewId])
 }
 
 model Subscription {
@@ -148,12 +202,27 @@ model Subscription {
   clerkUserId       String
   plan              String
   status            String
+  aiCredits         Int      @default(20)
+  
+  // Trial
+  trialEndsAt       DateTime?
+  isTrialExpired    Boolean  @default(false)  
+  
+  // Stripe
   stripeCustomerId  String?
   stripeSubId       String?
+
+  // Razorpay
+  razorpayCustomerId String?
+  razorpaySubId      String?
+  razorpayOrderId    String?
+
   currentPeriodEnd  DateTime?
-  aiCredits         Int      @default(100)
+ 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  
+  @@index([clerkUserId])
 }
 
 enum Stage {
@@ -176,4 +245,19 @@ enum InterviewStatus {
   COMPLETED
   CANCELLED
   RESCHEDULED
+}
+
+enum CandidateDecision {
+  PENDING
+  SELECTED
+  REJECTED
+  ON_HOLD
+  NEXT_ROUND
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  RECRUITER
+  MANAGER  
 }

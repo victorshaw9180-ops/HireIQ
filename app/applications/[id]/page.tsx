@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import AssignRecruiter from "@/components/AssignRecruiter";
+import ScheduleInterview from "@/components/InterviewScheduler";
 
 export default async function ApplicationDetailPage({
   params,
@@ -20,6 +22,7 @@ export default async function ApplicationDetailPage({
           createdAt: "desc",
         },
       },
+      assignedRecruiter: true,
     },
   });
 
@@ -114,6 +117,15 @@ export default async function ApplicationDetailPage({
         </div>
 
       </div>
+  
+      <AssignRecruiter
+      applicationId={application.id}
+      currentRecruiterId={application.assignedRecruiterId}
+      />
+      
+      <ScheduleInterview
+      applicationId={application.id}
+      />
 
     </main>
   );

@@ -135,7 +135,7 @@ export default function AnalyticsPage() {
           </h2>
 
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="300%">
               <LineChart data={revenueData}>
                 <XAxis dataKey="month" stroke="#94a3b8" />
                 <YAxis stroke="#94a3b8" />
@@ -157,7 +157,7 @@ export default function AnalyticsPage() {
           </h2>
 
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="300%">
               <PieChart>
                 <Pie
                   data={placementData}
@@ -185,7 +185,7 @@ export default function AnalyticsPage() {
         </h2>
 
         <div className="h-96">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="300%">
             <BarChart data={recruiterData}>
               <XAxis dataKey="recruiter" stroke="#94a3b8" />
               <YAxis stroke="#94a3b8" />

@@ -14,7 +14,7 @@ type Props = {
   applicationId: string;
 };
 
-export default function InterviewScheduler({
+export default function ScheduleInterview({
   applicationId,
 }: Props) {
 
@@ -75,7 +75,7 @@ export default function InterviewScheduler({
     <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
 
       <h2 className="mb-5 text-lg font-bold text-white">
-        Interview Scheduler
+        Schedule Interview
       </h2>
 
       <div className="mb-5 grid gap-3 md:grid-cols-3">

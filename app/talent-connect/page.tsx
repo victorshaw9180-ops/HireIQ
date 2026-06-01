@@ -11,6 +11,9 @@ import {
   Users,
   Mic,
 } from "lucide-react";
+import BulkEmailPanel from "@/components/BulkEmailPanel";
+import BulkActionPanel from "@/components/BulkActionPanel";
+import AIEmailGenerator from "@/components/AIEmailGenerator";
 
 const modules = [
   {
@@ -216,6 +219,19 @@ export default function TalentConnectPage() {
           </div>
         </div>
       </section>
+      
+      <section className="mt-8">
+        <BulkEmailPanel />
+      </section>
+    
+      <section className="mt-8">
+        <BulkActionPanel />
+      </section>
+
+      <section className="mt-8">
+        <AIEmailGenerator />
+      </section>
+      
     </main>
   );
 }

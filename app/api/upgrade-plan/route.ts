@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgId } from "@/lib/getOrgId";
+import { PLAN_CONFIG } from "@/lib/plans";
 
 export async function POST(req: Request) {
   try {

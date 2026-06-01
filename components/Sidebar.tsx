@@ -1,6 +1,6 @@
 
 'use client'
-
+import Image from "next/image";
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SignOutButton } from "@clerk/nextjs";
@@ -122,7 +122,46 @@ export default function Sidebar() {
           color: '#E8EAF0',
           letterSpacing: '-0.5px',
         }}>
-          TalentHawk
+        
+      <div
+        style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 30,
+      }}
+      >
+      <Image
+      src="/logo.png"
+      alt="TalentHawk AI"
+      width={42}
+      height={42}
+      style={{
+      borderRadius: 10,
+      }}
+      />
+
+      <div>
+        <div
+        style={{
+        fontWeight: 700,
+        fontSize: 18,
+        color: "white",
+      }}
+      >
+      TalentHawk AI
+      </div>
+
+      <div
+        style={{
+        fontSize: 11,
+        color: "#8B91A8",
+      }}
+      >
+      Intelligent Hiring
+      </div>
+      </div>
+      </div>
         </span>
         <span style={{
           fontSize: '10px',

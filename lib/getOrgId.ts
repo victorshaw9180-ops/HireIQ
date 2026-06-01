@@ -1,16 +1,7 @@
-//import { auth } from "@clerk/nextjs/server";
-
-//export async function getOrgId() {
-//  const { userId } = auth();
-//const { userId } = await auth();
-//  if (!userId) return null;
-//
-//  // TEMP: use userId as orgId
-//  return userId;
-//}
 
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { UserRole } from "@prisma/client";
 
 export async function getOrgId() {
   const { userId } = await auth();
@@ -33,7 +24,7 @@ export async function getOrgId() {
       members: {
         create: {
           userId,
-          role: "owner",
+          role: UserRole.ADMIN,
         },
       },
     },

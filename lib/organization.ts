@@ -1,6 +1,7 @@
 import { prisma } from './prisma'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import { UserRole } from "@prisma/client";
 
 export async function getOrCreateOrg() {
   const session = await auth()
@@ -28,7 +29,7 @@ export async function getOrCreateOrg() {
       data: {
         orgId: org.id,
         userId,
-        role: 'owner',
+        role: UserRole.ADMIN,
       },
       include: { org: true },
     })

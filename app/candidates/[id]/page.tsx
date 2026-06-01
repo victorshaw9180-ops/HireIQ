@@ -8,6 +8,7 @@ import ApplicationActivityTimeline from "@/components/ApplicationActivityTimelin
 import CandidateNotes from "@/components/CandidateNotes";
 import AICandidateInsights from "@/components/AICandidateInsights";
 import InterviewScheduler from "@/components/InterviewScheduler";
+import InterviewFeedbackForm from "@/components/InterviewFeedbackForm";
 
 const bestFitJobs = [
   {
@@ -294,6 +295,12 @@ export default async function CandidateProfilePage({
 
     <div className="mt-6">
     <InterviewScheduler applicationId={candidate.id} />
+    </div>
+
+    <div className="mt-6">
+    <InterviewFeedbackForm
+    interviewId="demo-interview-id"
+    />
     </div>
 
     </main>

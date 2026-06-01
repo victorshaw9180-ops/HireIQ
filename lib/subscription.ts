@@ -1,5 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { PLAN_CONFIG } from "@/lib/plans";
+
 
 export async function getCurrentSubscription() {
   const { userId } = await auth();
@@ -16,9 +18,10 @@ export async function getCurrentSubscription() {
     subscription = await prisma.subscription.create({
       data: {
         clerkUserId: userId,
-        plan: "starter",
-        status: "active",
-        aiCredits: 100,
+        plan: "free",
+        status: "trial",
+        aiCredits: PLAN_CONFIG.free.aiCredits,
+        trialEndsAt: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
       },
     });
   }

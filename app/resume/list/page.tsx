@@ -9,6 +9,7 @@ function formatFileSize(bytes: number) {
   if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }
+export const dynamic = "force-dynamic";
 export default async function ResumeListPage() {
   try {
     const orgId = await getOrgId();
