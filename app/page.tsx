@@ -92,7 +92,7 @@ export default function Home() {
           }}
         >
           <Image
-          src="/talenthawk-logo.png"
+          src="/logo.png"
           alt="TalentHawk Logo"
           width={110}
           height={110}
@@ -102,7 +102,7 @@ export default function Home() {
         
         <h1
           style={{
-            fontSize: "clamp(2.8rem, 6vw, 4.8rem)",
+            fontSize: "clamp(2rem, 3vw, 2.25rem)",
             fontWeight: 800,
             lineHeight: 1.1,
             marginBottom: 20,
