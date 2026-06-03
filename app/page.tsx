@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -79,15 +80,33 @@ export default function Home() {
             fontWeight: 700,
           }}
         >
-          AI-Powered Recruitment OS
+          AI-Powered Enterprise Recruitment Operating System
         </div>
-
+        
+        <div
+          style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginBottom: 32,
+          }}
+        >
+          <Image
+          src="/talenthawk-logo.png"
+          alt="TalentHawk Logo"
+          width={110}
+          height={110}
+          priority
+          />
+        </div>
+        
         <h1
           style={{
-            fontSize: 56,
+            fontSize: "clamp(2.8rem, 6vw, 4.8rem)",
             fontWeight: 800,
-            lineHeight: 1.05,
+            lineHeight: 1.1,
             marginBottom: 20,
+            
           }}
         >
           The First AI Recruitment Operating System
@@ -97,9 +116,10 @@ export default function Home() {
 
         <p
           style={{
-            fontSize: 20,
+            fontSize: "clamp(1.15rem, 2vw, 1.25rem)",
             color: "#A8B0C3",
-            lineHeight: 1.6,
+            fontWeight: 400,
+            lineHeight: 1.7,
             marginBottom: 32,
             maxWidth: 800,
             marginInline: "auto",

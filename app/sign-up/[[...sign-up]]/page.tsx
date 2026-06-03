@@ -1,17 +1,14 @@
-//import { SignUp } from "@clerk/nextjs";
+import { SignIn } from "@clerk/nextjs";
 
-//export default function Page() {
-//  return <SignUp />;
-//}
-
-//import { SignUp } from "@clerk/nextjs";
-
-//export default function Page() {
-//  return <SignUp afterSignUpUrl="/dashboard" />;
-//}
-
-import { SignUp } from "@clerk/nextjs";
-
-export default function Page() {
-  return <SignUp fallbackRedirectUrl="/dashboard" />;
+export default function SignInPage() {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-slate-950">
+      <SignIn
+        routing="path"
+        path="/sign-in"
+        signUpUrl="/sign-up"
+        fallbackRedirectUrl="/dashboard"
+      />
+    </main>
+  );
 }
