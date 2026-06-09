@@ -24,6 +24,17 @@ export default function Home() {
           borderBottom: "1px solid #1f2937",
         }}
       >
+
+         <div className="flex justify-center">
+          <Image
+          src="/logo.png"
+          alt="TalentHawk Logo"
+          width={110}
+          height={110}
+          priority
+          />  
+        </div>
+
         <Link
           href="/"
           style={{
@@ -81,23 +92,6 @@ export default function Home() {
           }}
         >
           AI-Powered Enterprise Recruitment Operating System
-        </div>
-        
-        <div
-          style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginBottom: 32,
-          }}
-        >
-          <Image
-          src="/logo.png"
-          alt="TalentHawk Logo"
-          width={110}
-          height={110}
-          priority
-          />
         </div>
         
         <h1
